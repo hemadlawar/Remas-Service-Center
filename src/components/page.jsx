@@ -14,12 +14,14 @@ export default function ServiceTable() {
   };
 
   const tableContainerStyle = {
-    backgroundColor: "#fff",
     borderRadius: "12px",
     boxShadow: "0 4px 15px rgba(0, 0, 0, 0.15)",
     overflow: "hidden",
-    width: "700px",
+    width: "100%",
+    maxWidth: "700px",
     textAlign: "center",
+    padding: "0 10px",
+    boxSizing: "border-box",
   };
 
   const logoStyle = {
@@ -42,8 +44,8 @@ export default function ServiceTable() {
     display: "flex",
     justifyContent: "center",
     gap: "10px",
-    marginTop: "10px",
-    marginBottom: "10px",
+    flexWrap: "wrap",
+    margin: "10px 0",
   };
 
   const buttonStyle = {
@@ -55,32 +57,36 @@ export default function ServiceTable() {
     color: "#fff",
     fontWeight: "bold",
     transition: "background 0.3s",
+    flex: "1 1 30%",
+    minWidth: "90px",
   };
 
   const tableStyle = {
     width: "100%",
     borderCollapse: "collapse",
+    fontSize: "14px",
   };
 
   const thStyle = {
     backgroundColor: "#e3f2fd",
     color: "#333",
-    padding: "12px 10px",
+    padding: "12px 8px",
     textAlign: "center",
     fontSize: "16px",
     borderBottom: "2px solid #bbdefb",
   };
 
   const tdStyle = {
-    padding: "10px",
+    padding: "10px 6px",
     textAlign: "center",
     borderBottom: "1px solid #e0e0e0",
-    fontSize: "15px",
+    fontSize: "14px",
+    wordBreak: "break-word",
   };
 
   const iconStyle = {
-    width: "30px",
-    height: "30px",
+    width: "25px",
+    height: "25px",
     cursor: "pointer",
     transition: "transform 0.2s ease",
   };
@@ -136,16 +142,17 @@ export default function ServiceTable() {
 
   return (
     <div style={containerStyle}>
+      {" "}
       <div style={tableContainerStyle}>
-        {/* Logo at the top */}
+        {/* Logo */}{" "}
         <img
           src="https://i.ibb.co/39PSWqcT/376748679-775601211239377-3433871285863762361-n-1.jpg"
           alt="Remas Logo"
           style={logoStyle}
         />
-
+        ```
         <div style={titleStyle}>{translateTitle()}</div>
-
+        {/* Language Buttons */}
         <div style={buttonContainerStyle}>
           <button style={buttonStyle} onClick={() => setLanguage("en")}>
             English
@@ -157,98 +164,93 @@ export default function ServiceTable() {
             العربیة
           </button>
         </div>
-
-        <table style={tableStyle}>
-          <thead>
-            <tr>
-              <th style={thStyle}>#</th>
-              <th style={thStyle}>
-                {language === "en"
-                  ? "Service"
-                  : language === "ku"
-                  ? "خزمه‌تگوزاری"
-                  : "خدمات"}
-              </th>
-              <th style={thStyle}>
-                {language === "en"
-                  ? "Phone Call"
-                  : language === "ku"
-                  ? "پەیوەندی"
-                  : "اتصال"}
-              </th>
-              <th style={thStyle}>WhatsApp</th>
-            </tr>
-          </thead>
-          <tbody>
-            {services.map((service, index) => (
-              <tr key={index}>
-                <td style={tdStyle}>{service.number}</td>
-                <td style={tdStyle}>{translateName(service.name)}</td>
-
-                {/* Phone column */}
-                <td style={tdStyle}>
-                  <a
-                    href={`tel:${service.phone}`}
-                    style={{
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      gap: "6px",
-                    }}
-                  >
-                    <img
-                      src="https://cdn-icons-png.flaticon.com/512/724/724664.png"
-                      alt="Call"
-                      style={iconStyle}
-                      onMouseOver={(e) =>
-                        (e.currentTarget.style.transform = "scale(1.1)")
-                      }
-                      onMouseOut={(e) =>
-                        (e.currentTarget.style.transform = "scale(1)")
-                      }
-                    />
-                    <span style={{ minWidth: "90px", textAlign: "left" }}>
-                      {getProvider(service.phone)}
-                    </span>
-                  </a>
-                </td>
-
-                {/* WhatsApp column */}
-                <td style={tdStyle}>
-                  <a
-                    href={`https://wa.me/${service.whatsapp.replace("+", "")}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    style={{
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      gap: "6px",
-                      color: "#25D366",
-                      fontWeight: "bold",
-                      textDecoration: "none",
-                    }}
-                  >
-                    <img
-                      src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg"
-                      alt="WhatsApp"
-                      style={iconStyle}
-                      onMouseOver={(e) =>
-                        (e.currentTarget.style.transform = "scale(1.1)")
-                      }
-                      onMouseOut={(e) =>
-                        (e.currentTarget.style.transform = "scale(1)")
-                      }
-                    />
-                    <span style={{ minWidth: "90px", textAlign: "left" }}>
-                      {getProvider(service.whatsapp)}
-                    </span>
-                  </a>
-                </td>
+        {/* Table */}
+        <div style={{ overflowX: "auto" }}>
+          <table style={tableStyle}>
+            <thead>
+              <tr>
+                <th style={thStyle}>#</th>
+                <th style={thStyle}>{translateName("Service")}</th>
+                <th style={thStyle}>
+                  {language === "en"
+                    ? "Phone"
+                    : language === "ku"
+                    ? "پەیوەندی"
+                    : "اتصال"}
+                </th>
+                <th style={thStyle}>WhatsApp</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {services.map((service, index) => (
+                <tr key={index}>
+                  <td style={tdStyle}>{service.number}</td>
+                  <td style={tdStyle}>{translateName(service.name)}</td>
+                  <td style={tdStyle}>
+                    <a
+                      href={`tel:${service.phone}`}
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "flex-start", // align left
+                        gap: "6px",
+                      }}
+                    >
+                      <img
+                        src="https://cdn-icons-png.flaticon.com/512/724/724664.png"
+                        alt="Call"
+                        style={iconStyle}
+                      />
+                      <span
+                        style={{
+                          minWidth: "100px", // fixed width for alignment
+                          textAlign: "left",
+                          fontSize: "13px",
+                        }}
+                      >
+                        {getProvider(service.phone)}
+                      </span>
+                    </a>
+                  </td>
+                  <td style={tdStyle}>
+                    <a
+                      href={`https://wa.me/${service.whatsapp.replace(
+                        "+",
+                        ""
+                      )}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "flex-start", // align left
+                        gap: "6px",
+                        color: "#25D366",
+                        fontWeight: "bold",
+                        textDecoration: "none",
+                      }}
+                    >
+                      <img
+                        src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg"
+                        alt="WhatsApp"
+                        style={iconStyle}
+                      />
+                      <span
+                        style={{
+                          minWidth: "100px", // same fixed width
+                          textAlign: "left",
+                          fontSize: "13px",
+                        }}
+                      >
+                        {getProvider(service.whatsapp)}
+                      </span>
+                    </a>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   );
