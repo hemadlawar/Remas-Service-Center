@@ -268,32 +268,15 @@ export default function ServiceTable() {
         </div>
       </div>
 
-      <div
-        style={{
-          textAlign: "center",
-          marginTop: "15px",
-          padding: "10px",
-        }}
-      >
-        <p
-          style={{
-            marginBottom: "10px",
-            fontSize: "13px",
-            lineHeight: "1.5",
-            wordWrap: "break-word",
-          }}
-        >
+      <div style={supportSectionStyle}>
+        <p style={{ marginBottom: "10px", fontSize: "13px" }}>
           {language === "en" && "For any requests send your request to support"}
           {language === "ku" &&
             "بۆ هەر داواکاریەک پەیوەندی بە تیمی سەپۆرتی رێماس بکەن"}
           {language === "ar" && "لأي طلبات، أرسل طلبك إلى الدعم"}
         </p>
         <button
-          style={{
-            ...supportButtonStyle,
-            display: "inline-block",
-            margin: "0 auto",
-          }}
+          style={supportButtonStyle}
           onClick={() =>
             (window.location.href = "https://support.netgrow.krd/")
           }
