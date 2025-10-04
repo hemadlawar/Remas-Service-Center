@@ -13,122 +13,6 @@ export default function ServiceTable() {
     return () => window.removeEventListener("resize", checkMobile);
   }, []);
 
-  const containerStyle = {
-    fontFamily: "Arial, sans-serif",
-    background: "#ffffff",
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    minHeight: "100vh",
-    padding: "10px",
-    flexDirection: "column",
-    boxSizing: "border-box",
-    width: "100%",
-    overflowX: "hidden",
-  };
-
-  const tableContainerStyle = {
-    borderRadius: "12px",
-    boxShadow: "0 4px 15px rgba(0, 0, 0, 0.15)",
-    overflowX: "auto",
-    width: "100%",
-    maxWidth: "700px",
-    textAlign: "center",
-    padding: "0 5px",
-    boxSizing: "border-box",
-    color: isMobile ? "black" : "inherit", // Black on mobile
-  };
-
-  const logoStyle = {
-    width: "100px",
-    maxWidth: "30%",
-    height: "auto",
-    margin: "10px auto",
-    display: "block",
-  };
-
-  const titleStyle = {
-    textAlign: "center",
-    backgroundColor: "#1976d2",
-    color: "#fff",
-    padding: "12px 0",
-    fontSize: "18px",
-    fontWeight: "bold",
-  };
-
-  const buttonContainerStyle = {
-    display: "flex",
-    justifyContent: "center",
-    gap: "8px",
-    flexWrap: "wrap",
-    margin: "8px 0",
-  };
-
-  const buttonStyle = {
-    padding: "6px 10px",
-    border: "none",
-    borderRadius: "6px",
-    cursor: "pointer",
-    backgroundColor: "#1976d2",
-    color: "#fff",
-    fontWeight: "bold",
-    fontSize: "13px",
-    transition: "background 0.3s",
-    flex: "1 1 30%",
-    minWidth: "80px",
-  };
-
-  const tableStyle = {
-    width: "100%",
-    borderCollapse: "collapse",
-    fontSize: "13px",
-    tableLayout: "auto",
-  };
-
-  const thStyle = {
-    backgroundColor: "#e3f2fd",
-    color: "#333",
-    padding: "8px 5px",
-    textAlign: "center",
-    fontSize: "14px",
-    borderBottom: "2px solid #bbdefb",
-    whiteSpace: "nowrap",
-  };
-
-  const tdStyle = {
-    padding: "8px 5px",
-    textAlign: "center",
-    borderBottom: "1px solid #e0e0e0",
-    fontSize: "13px",
-    wordBreak: "break-word",
-    color: isMobile ? "black" : "inherit", // Black text on mobile
-  };
-
-  const iconStyle = {
-    width: "20px",
-    height: "20px",
-    cursor: "pointer",
-    transition: "transform 0.2s ease",
-  };
-
-  const supportSectionStyle = {
-    marginTop: "20px",
-    textAlign: "center",
-    padding: "0 10px",
-    color: isMobile ? "black" : "inherit", // Black text on mobile
-  };
-
-  const supportButtonStyle = {
-    padding: "8px 16px",
-    backgroundColor: "#1976d2",
-    color: "#fff",
-    border: "none",
-    borderRadius: "6px",
-    cursor: "pointer",
-    fontWeight: "bold",
-    fontSize: "13px",
-  };
-
   const services = [
     {
       number: 1,
@@ -156,6 +40,12 @@ export default function ServiceTable() {
     },
   ];
 
+  // Convert Western digits to Arabic-Indic
+  const toArabicDigits = (num) => {
+    const arabicDigits = ["٠", "١", "٢", "٣", "٤", "٥", "٦", "٧", "٨", "٩"];
+    return num.toString().replace(/[0-9]/g, (d) => arabicDigits[d]);
+  };
+
   const translateName = (name) => {
     if (language === "ku") {
       if (name === "Service") return "خزمه‌تگوزاری";
@@ -173,13 +63,103 @@ export default function ServiceTable() {
     return "Remas City Service Center";
   };
 
-  const getProvider = (phone) => {
-    if (phone.includes("772") || phone.includes("770")) return "Asiacell";
-    return "Korek Telecom";
+  // Table columns for LTR and RTL
+  const columnsLTR = [
+    { key: "number", label: "#", align: "left" },
+    { key: "name", label: translateName("Service") },
+    {
+      key: "phone",
+      label:
+        language === "en" ? "Phone" : language === "ku" ? "پەیوەندی" : "اتصال",
+    },
+    {
+      key: "whatsapp",
+      label:
+        language === "en"
+          ? "WhatsApp"
+          : language === "ku"
+          ? "واتس ئاپ"
+          : "واتس اب",
+    },
+  ];
+
+  // Correct RTL order → Service | Phone | WhatsApp | #
+  const columnsRTL = [
+    { key: "name", label: translateName("Service") },
+    {
+      key: "phone",
+      label:
+        language === "en" ? "Phone" : language === "ku" ? "پەیوەندی" : "اتصال",
+    },
+    {
+      key: "whatsapp",
+      label:
+        language === "en"
+          ? "WhatsApp"
+          : language === "ku"
+          ? "واتس ئاپ"
+          : "واتس اب",
+    },
+    { key: "number", label: "#", align: "right" },
+  ];
+
+  const columns = language === "en" ? columnsLTR : columnsRTL;
+
+  // Helper to render cell content
+  const renderCell = (service, col) => {
+    if (col.key === "number") {
+      const value =
+        language === "en" ? service.number : toArabicDigits(service.number);
+      return (
+        <span style={{ textAlign: col.align || "center", display: "block" }}>
+          {value}
+        </span>
+      );
+    }
+    if (col.key === "name")
+      return (
+        <span className={isMobile ? "service-name-mobile" : ""}>
+          {translateName(service.name)}
+        </span>
+      );
+    if (col.key === "phone")
+      return (
+        <a
+          href={`tel:${service.phone}`}
+          className={isMobile ? "link-mobile" : ""}
+        >
+          <img
+            src="https://cdn-icons-png.flaticon.com/512/724/724664.png"
+            alt="Call"
+            className="icon"
+          />
+          <span>{service.phone}</span>
+        </a>
+      );
+    if (col.key === "whatsapp")
+      return (
+        <a
+          href={`https://wa.me/${service.whatsapp.replace("+", "")}`}
+          target="_blank"
+          rel="noopener noreferrer"
+          className={isMobile ? "link-mobile" : ""}
+        >
+          <img
+            src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg"
+            alt="WhatsApp"
+            className="icon"
+          />
+          <span>{service.whatsapp}</span>
+        </a>
+      );
+    return null;
   };
 
   return (
-    <div className={`container${isMobile ? " mobile" : ""}`}>
+    <div
+      className={`container${isMobile ? " mobile" : ""}`}
+      dir={language === "en" ? "ltr" : "rtl"}
+    >
       <div className="table-container">
         <img
           src="https://i.ibb.co/39PSWqcT/376748679-775601211239377-3433871285863762361-n-1.jpg"
@@ -205,62 +185,31 @@ export default function ServiceTable() {
           <table className="service-table">
             <thead>
               <tr>
-                <th>#</th>
-                <th>{translateName("Service")}</th>
-                <th>
-                  {language === "en"
-                    ? "Phone"
-                    : language === "ku"
-                    ? "پەیوەندی"
-                    : "اتصال"}
-                </th>
-                <th>
-                  {language === "en"
-                    ? "WhatsApp"
-                    : language === "ku"
-                    ? "واتس ئاپ"
-                    : "واتس اب"}
-                </th>
+                {columns.map((col) => (
+                  <th
+                    key={col.key}
+                    style={{
+                      textAlign: col.align || "center",
+                    }}
+                  >
+                    {col.label}
+                  </th>
+                ))}
               </tr>
             </thead>
             <tbody>
-              {services.map((service, index) => (
-                <tr key={index}>
-                  <td>{service.number}</td>
-                  <td className={isMobile ? "service-name-mobile" : ""}>
-                    {translateName(service.name)}
-                  </td>
-                  <td>
-                    <a
-                      href={`tel:${service.phone}`}
-                      className={isMobile ? "link-mobile" : ""}
+              {services.map((service, idx) => (
+                <tr key={idx}>
+                  {columns.map((col) => (
+                    <td
+                      key={col.key}
+                      style={{
+                        textAlign: col.align || "center",
+                      }}
                     >
-                      <img
-                        src="https://cdn-icons-png.flaticon.com/512/724/724664.png"
-                        alt="Call"
-                        className="icon"
-                      />
-                      <span>{service.phone}</span>
-                    </a>
-                  </td>
-                  <td>
-                    <a
-                      href={`https://wa.me/${service.whatsapp.replace(
-                        "+",
-                        ""
-                      )}`}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className={isMobile ? "link-mobile" : ""}
-                    >
-                      <img
-                        src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg"
-                        alt="WhatsApp"
-                        className="icon"
-                      />
-                      <span>{service.whatsapp}</span>
-                    </a>
-                  </td>
+                      {renderCell(service, col)}
+                    </td>
+                  ))}
                 </tr>
               ))}
             </tbody>
