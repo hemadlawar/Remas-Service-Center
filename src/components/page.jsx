@@ -178,7 +178,13 @@ export default function ServiceTable() {
                     ? "پەیوەندی"
                     : "اتصال"}
                 </th>
-                <th style={thStyle}>WhatsApp</th>
+                <th style={thStyle}>
+                  {language === "en"
+                    ? "WhatsApp"
+                    : language === "ku"
+                    ? "واتس ئاپ"
+                    : "واتس اب"}
+                </th>
               </tr>
             </thead>
             <tbody>
