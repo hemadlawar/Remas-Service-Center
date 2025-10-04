@@ -1,7 +1,17 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+// Import the CSS file
 
 export default function ServiceTable() {
   const [language, setLanguage] = useState("en");
+  const [isMobile, setIsMobile] = useState(false);
+
+  // Detect screen size for mobile
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth <= 768);
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
 
   const containerStyle = {
     fontFamily: "Arial, sans-serif",
@@ -10,7 +20,7 @@ export default function ServiceTable() {
     justifyContent: "center",
     alignItems: "center",
     minHeight: "100vh",
-    padding: "10px", // smaller padding for mobile
+    padding: "10px",
     flexDirection: "column",
     boxSizing: "border-box",
     width: "100%",
@@ -20,16 +30,17 @@ export default function ServiceTable() {
   const tableContainerStyle = {
     borderRadius: "12px",
     boxShadow: "0 4px 15px rgba(0, 0, 0, 0.15)",
-    overflowX: "auto", // allow scroll on small screens
+    overflowX: "auto",
     width: "100%",
     maxWidth: "700px",
     textAlign: "center",
     padding: "0 5px",
     boxSizing: "border-box",
+    color: isMobile ? "black" : "inherit", // Black on mobile
   };
 
   const logoStyle = {
-    width: "100px", // smaller on mobile
+    width: "100px",
     maxWidth: "30%",
     height: "auto",
     margin: "10px auto",
@@ -41,7 +52,7 @@ export default function ServiceTable() {
     backgroundColor: "#1976d2",
     color: "#fff",
     padding: "12px 0",
-    fontSize: "18px", // smaller font for mobile
+    fontSize: "18px",
     fontWeight: "bold",
   };
 
@@ -70,8 +81,8 @@ export default function ServiceTable() {
   const tableStyle = {
     width: "100%",
     borderCollapse: "collapse",
-    fontSize: "13px", // slightly smaller
-    tableLayout: "auto", // auto adjust on small screens
+    fontSize: "13px",
+    tableLayout: "auto",
   };
 
   const thStyle = {
@@ -90,6 +101,7 @@ export default function ServiceTable() {
     borderBottom: "1px solid #e0e0e0",
     fontSize: "13px",
     wordBreak: "break-word",
+    color: isMobile ? "black" : "inherit", // Black text on mobile
   };
 
   const iconStyle = {
@@ -103,6 +115,7 @@ export default function ServiceTable() {
     marginTop: "20px",
     textAlign: "center",
     padding: "0 10px",
+    color: isMobile ? "black" : "inherit", // Black text on mobile
   };
 
   const supportButtonStyle = {
@@ -166,42 +179,42 @@ export default function ServiceTable() {
   };
 
   return (
-    <div style={containerStyle}>
-      <div style={tableContainerStyle}>
+    <div className={`container${isMobile ? " mobile" : ""}`}>
+      <div className="table-container">
         <img
           src="https://i.ibb.co/39PSWqcT/376748679-775601211239377-3433871285863762361-n-1.jpg"
           alt="Remas Logo"
-          style={logoStyle}
+          className="logo"
         />
 
-        <div style={titleStyle}>{translateTitle()}</div>
+        <div className="title">{translateTitle()}</div>
 
-        <div style={buttonContainerStyle}>
-          <button style={buttonStyle} onClick={() => setLanguage("en")}>
+        <div className="button-container">
+          <button className="lang-btn" onClick={() => setLanguage("en")}>
             English
           </button>
-          <button style={buttonStyle} onClick={() => setLanguage("ku")}>
+          <button className="lang-btn" onClick={() => setLanguage("ku")}>
             کورد
           </button>
-          <button style={buttonStyle} onClick={() => setLanguage("ar")}>
+          <button className="lang-btn" onClick={() => setLanguage("ar")}>
             العربیة
           </button>
         </div>
 
         <div style={{ overflowX: "auto" }}>
-          <table style={tableStyle}>
+          <table className="service-table">
             <thead>
               <tr>
-                <th style={thStyle}>#</th>
-                <th style={thStyle}>{translateName("Service")}</th>
-                <th style={thStyle}>
+                <th>#</th>
+                <th>{translateName("Service")}</th>
+                <th>
                   {language === "en"
                     ? "Phone"
                     : language === "ku"
                     ? "پەیوەندی"
                     : "اتصال"}
                 </th>
-                <th style={thStyle}>
+                <th>
                   {language === "en"
                     ? "WhatsApp"
                     : language === "ku"
@@ -213,28 +226,24 @@ export default function ServiceTable() {
             <tbody>
               {services.map((service, index) => (
                 <tr key={index}>
-                  <td style={tdStyle}>{service.number}</td>
-                  <td style={tdStyle}>{translateName(service.name)}</td>
-                  <td style={tdStyle}>
+                  <td>{service.number}</td>
+                  <td className={isMobile ? "service-name-mobile" : ""}>
+                    {translateName(service.name)}
+                  </td>
+                  <td>
                     <a
                       href={`tel:${service.phone}`}
-                      style={{
-                        display: "flex",
-                        alignItems: "center",
-                        gap: "6px",
-                      }}
+                      className={isMobile ? "link-mobile" : ""}
                     >
                       <img
                         src="https://cdn-icons-png.flaticon.com/512/724/724664.png"
                         alt="Call"
-                        style={iconStyle}
+                        className="icon"
                       />
-                      <span style={{ fontSize: "12px" }}>
-                        {getProvider(service.phone)}
-                      </span>
+                      <span>{service.phone}</span>
                     </a>
                   </td>
-                  <td style={tdStyle}>
+                  <td>
                     <a
                       href={`https://wa.me/${service.whatsapp.replace(
                         "+",
@@ -242,23 +251,14 @@ export default function ServiceTable() {
                       )}`}
                       target="_blank"
                       rel="noopener noreferrer"
-                      style={{
-                        display: "flex",
-                        alignItems: "center",
-                        gap: "6px",
-                        color: "#25D366",
-                        fontWeight: "bold",
-                        textDecoration: "none",
-                      }}
+                      className={isMobile ? "link-mobile" : ""}
                     >
                       <img
                         src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg"
                         alt="WhatsApp"
-                        style={iconStyle}
+                        className="icon"
                       />
-                      <span style={{ fontSize: "12px" }}>
-                        {getProvider(service.whatsapp)}
-                      </span>
+                      <span>{service.whatsapp}</span>
                     </a>
                   </td>
                 </tr>
@@ -268,15 +268,15 @@ export default function ServiceTable() {
         </div>
       </div>
 
-      <div style={supportSectionStyle}>
-        <p style={{ marginBottom: "10px", fontSize: "13px" }}>
+      <div className={`support-section${isMobile ? " support-mobile" : ""}`}>
+        <p>
           {language === "en" && "For any requests send your request to support"}
           {language === "ku" &&
             "بۆ هەر داواکاریەک پەیوەندی بە تیمی سەپۆرتی رێماس بکەن"}
           {language === "ar" && "لأي طلبات، أرسل طلبك إلى الدعم"}
         </p>
         <button
-          style={supportButtonStyle}
+          className="support-btn"
           onClick={() =>
             (window.location.href = "https://support.netgrow.krd/")
           }
