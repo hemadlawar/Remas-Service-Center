@@ -5,12 +5,13 @@ export default function ServiceTable() {
 
   const containerStyle = {
     fontFamily: "Arial, sans-serif",
-    background: "linear-gradient(to right, #f8f9fa, #e8ecf1)",
+    background: "#ffffff", // Changed background to white
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
     minHeight: "100vh",
     padding: "20px",
+    flexDirection: "column", // To stack the support button vertically
   };
 
   const tableContainerStyle = {
@@ -91,6 +92,22 @@ export default function ServiceTable() {
     transition: "transform 0.2s ease",
   };
 
+  const supportSectionStyle = {
+    marginTop: "30px",
+    textAlign: "center",
+  };
+
+  const supportButtonStyle = {
+    padding: "10px 20px",
+    backgroundColor: "#1976d2",
+    color: "#fff",
+    border: "none",
+    borderRadius: "6px",
+    cursor: "pointer",
+    fontWeight: "bold",
+    fontSize: "14px",
+  };
+
   const services = [
     {
       number: 1,
@@ -142,16 +159,17 @@ export default function ServiceTable() {
 
   return (
     <div style={containerStyle}>
-      {" "}
       <div style={tableContainerStyle}>
-        {/* Logo */}{" "}
+        {/* Logo */}
         <img
           src="https://i.ibb.co/39PSWqcT/376748679-775601211239377-3433871285863762361-n-1.jpg"
           alt="Remas Logo"
           style={logoStyle}
         />
-        ```
+
+        {/* Title */}
         <div style={titleStyle}>{translateTitle()}</div>
+
         {/* Language Buttons */}
         <div style={buttonContainerStyle}>
           <button style={buttonStyle} onClick={() => setLanguage("en")}>
@@ -164,6 +182,7 @@ export default function ServiceTable() {
             العربیة
           </button>
         </div>
+
         {/* Table */}
         <div style={{ overflowX: "auto" }}>
           <table style={tableStyle}>
@@ -198,7 +217,7 @@ export default function ServiceTable() {
                       style={{
                         display: "flex",
                         alignItems: "center",
-                        justifyContent: "flex-start", // align left
+                        justifyContent: "flex-start",
                         gap: "6px",
                       }}
                     >
@@ -209,7 +228,7 @@ export default function ServiceTable() {
                       />
                       <span
                         style={{
-                          minWidth: "100px", // fixed width for alignment
+                          minWidth: "100px",
                           textAlign: "left",
                           fontSize: "13px",
                         }}
@@ -229,7 +248,7 @@ export default function ServiceTable() {
                       style={{
                         display: "flex",
                         alignItems: "center",
-                        justifyContent: "flex-start", // align left
+                        justifyContent: "flex-start",
                         gap: "6px",
                         color: "#25D366",
                         fontWeight: "bold",
@@ -243,7 +262,7 @@ export default function ServiceTable() {
                       />
                       <span
                         style={{
-                          minWidth: "100px", // same fixed width
+                          minWidth: "100px",
                           textAlign: "left",
                           fontSize: "13px",
                         }}
@@ -257,6 +276,19 @@ export default function ServiceTable() {
             </tbody>
           </table>
         </div>
+      </div>
+
+      {/* Support Section */}
+      <div style={supportSectionStyle}>
+        <p style={{ marginBottom: "10px", fontSize: "14px" }}>
+          For any requests send your request to support
+        </p>
+        <button
+          style={supportButtonStyle}
+          onClick={() => (window.location.href = "https://netgrow.krd/")}
+        >
+          Go to Support
+        </button>
       </div>
     </div>
   );
