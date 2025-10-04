@@ -279,9 +279,13 @@ export default function ServiceTable() {
       </div>
 
       {/* Support Section */}
+      {/* Support Section */}
       <div style={supportSectionStyle}>
         <p style={{ marginBottom: "10px", fontSize: "14px" }}>
-          For any requests send your request to support
+          {language === "en" && "For any requests send your request to support"}
+          {language === "ku" &&
+            "بۆ هەر داواکاریەک پەیوەندی بە تیمی سەپۆرتی رێماس بکەن"}
+          {language === "ar" && "لأي طلبات، أرسل طلبك إلى الدعم"}
         </p>
         <button
           style={supportButtonStyle}
@@ -289,7 +293,9 @@ export default function ServiceTable() {
             (window.location.href = "https://support.netgrow.krd/")
           }
         >
-          Go to Support
+          {language === "en" && "Go to Support"}
+          {language === "ku" && "تیمی سەپۆڕت"}
+          {language === "ar" && "اذهب إلى الدعم"}
         </button>
       </div>
     </div>
