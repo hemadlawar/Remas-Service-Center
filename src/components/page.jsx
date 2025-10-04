@@ -19,6 +19,14 @@ export default function ServiceTable() {
     boxShadow: "0 4px 15px rgba(0, 0, 0, 0.15)",
     overflow: "hidden",
     width: "700px",
+    textAlign: "center",
+  };
+
+  const logoStyle = {
+    width: "120px",
+    height: "auto",
+    margin: "15px auto",
+    display: "block",
   };
 
   const titleStyle = {
@@ -104,7 +112,6 @@ export default function ServiceTable() {
     },
   ];
 
-  // 🔠 Translation logic
   const translateName = (name) => {
     if (language === "ku") {
       if (name === "Service") return "خزمه‌تگوزاری";
@@ -130,6 +137,13 @@ export default function ServiceTable() {
   return (
     <div style={containerStyle}>
       <div style={tableContainerStyle}>
+        {/* Logo at the top */}
+        <img
+          src="https://i.ibb.co/39PSWqcT/376748679-775601211239377-3433871285863762361-n-1.jpg"
+          alt="Remas Logo"
+          style={logoStyle}
+        />
+
         <div style={titleStyle}>{translateTitle()}</div>
 
         <div style={buttonContainerStyle}>
@@ -210,7 +224,7 @@ export default function ServiceTable() {
                       alignItems: "center",
                       justifyContent: "center",
                       gap: "6px",
-                      color: "#25D366", // WhatsApp green
+                      color: "#25D366",
                       fontWeight: "bold",
                       textDecoration: "none",
                     }}
