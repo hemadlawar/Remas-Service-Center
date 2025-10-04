@@ -5,30 +5,34 @@ export default function ServiceTable() {
 
   const containerStyle = {
     fontFamily: "Arial, sans-serif",
-    background: "#ffffff", // Changed background to white
+    background: "#ffffff",
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
     minHeight: "100vh",
-    padding: "20px",
-    flexDirection: "column", // To stack the support button vertically
+    padding: "10px", // smaller padding for mobile
+    flexDirection: "column",
+    boxSizing: "border-box",
+    width: "100%",
+    overflowX: "hidden",
   };
 
   const tableContainerStyle = {
     borderRadius: "12px",
     boxShadow: "0 4px 15px rgba(0, 0, 0, 0.15)",
-    overflow: "hidden",
+    overflowX: "auto", // allow scroll on small screens
     width: "100%",
     maxWidth: "700px",
     textAlign: "center",
-    padding: "0 10px",
+    padding: "0 5px",
     boxSizing: "border-box",
   };
 
   const logoStyle = {
-    width: "120px",
+    width: "100px", // smaller on mobile
+    maxWidth: "30%",
     height: "auto",
-    margin: "15px auto",
+    margin: "10px auto",
     display: "block",
   };
 
@@ -36,76 +40,80 @@ export default function ServiceTable() {
     textAlign: "center",
     backgroundColor: "#1976d2",
     color: "#fff",
-    padding: "15px 0",
-    fontSize: "22px",
+    padding: "12px 0",
+    fontSize: "18px", // smaller font for mobile
     fontWeight: "bold",
   };
 
   const buttonContainerStyle = {
     display: "flex",
     justifyContent: "center",
-    gap: "10px",
+    gap: "8px",
     flexWrap: "wrap",
-    margin: "10px 0",
+    margin: "8px 0",
   };
 
   const buttonStyle = {
-    padding: "8px 14px",
+    padding: "6px 10px",
     border: "none",
     borderRadius: "6px",
     cursor: "pointer",
     backgroundColor: "#1976d2",
     color: "#fff",
     fontWeight: "bold",
+    fontSize: "13px",
     transition: "background 0.3s",
     flex: "1 1 30%",
-    minWidth: "90px",
+    minWidth: "80px",
   };
 
   const tableStyle = {
     width: "100%",
     borderCollapse: "collapse",
-    fontSize: "14px",
+    fontSize: "13px", // slightly smaller
+    tableLayout: "auto", // auto adjust on small screens
   };
 
   const thStyle = {
     backgroundColor: "#e3f2fd",
     color: "#333",
-    padding: "12px 8px",
+    padding: "8px 5px",
     textAlign: "center",
-    fontSize: "16px",
+    fontSize: "14px",
     borderBottom: "2px solid #bbdefb",
+    whiteSpace: "nowrap",
   };
 
   const tdStyle = {
-    padding: "10px 6px",
+    padding: "8px 5px",
     textAlign: "center",
     borderBottom: "1px solid #e0e0e0",
-    fontSize: "14px",
+    fontSize: "13px",
     wordBreak: "break-word",
   };
 
   const iconStyle = {
-    width: "25px",
-    height: "25px",
+    width: "20px",
+    height: "20px",
     cursor: "pointer",
     transition: "transform 0.2s ease",
   };
 
   const supportSectionStyle = {
-    marginTop: "30px",
+    marginTop: "20px",
     textAlign: "center",
+    padding: "0 10px",
   };
 
   const supportButtonStyle = {
-    padding: "10px 20px",
+    padding: "8px 16px",
     backgroundColor: "#1976d2",
     color: "#fff",
     border: "none",
     borderRadius: "6px",
     cursor: "pointer",
     fontWeight: "bold",
-    fontSize: "14px",
+    fontSize: "13px",
   };
 
   const services = [
@@ -160,17 +168,14 @@ export default function ServiceTable() {
   return (
     <div style={containerStyle}>
       <div style={tableContainerStyle}>
-        {/* Logo */}
         <img
           src="https://i.ibb.co/39PSWqcT/376748679-775601211239377-3433871285863762361-n-1.jpg"
           alt="Remas Logo"
           style={logoStyle}
         />
 
-        {/* Title */}
         <div style={titleStyle}>{translateTitle()}</div>
 
-        {/* Language Buttons */}
         <div style={buttonContainerStyle}>
           <button style={buttonStyle} onClick={() => setLanguage("en")}>
             English
@@ -183,7 +188,6 @@ export default function ServiceTable() {
           </button>
         </div>
 
-        {/* Table */}
         <div style={{ overflowX: "auto" }}>
           <table style={tableStyle}>
             <thead>
@@ -217,7 +221,6 @@ export default function ServiceTable() {
                       style={{
                         display: "flex",
                         alignItems: "center",
-                        justifyContent: "flex-start",
                         gap: "6px",
                       }}
                     >
@@ -226,13 +229,7 @@ export default function ServiceTable() {
                         alt="Call"
                         style={iconStyle}
                       />
-                      <span
-                        style={{
-                          minWidth: "100px",
-                          textAlign: "left",
-                          fontSize: "13px",
-                        }}
-                      >
+                      <span style={{ fontSize: "12px" }}>
                         {getProvider(service.phone)}
                       </span>
                     </a>
@@ -248,7 +245,6 @@ export default function ServiceTable() {
                       style={{
                         display: "flex",
                         alignItems: "center",
-                        justifyContent: "flex-start",
                         gap: "6px",
                         color: "#25D366",
                         fontWeight: "bold",
@@ -260,13 +256,7 @@ export default function ServiceTable() {
                         alt="WhatsApp"
                         style={iconStyle}
                       />
-                      <span
-                        style={{
-                          minWidth: "100px",
-                          textAlign: "left",
-                          fontSize: "13px",
-                        }}
-                      >
+                      <span style={{ fontSize: "12px" }}>
                         {getProvider(service.whatsapp)}
                       </span>
                     </a>
@@ -278,10 +268,8 @@ export default function ServiceTable() {
         </div>
       </div>
 
-      {/* Support Section */}
-      {/* Support Section */}
       <div style={supportSectionStyle}>
-        <p style={{ marginBottom: "10px", fontSize: "14px" }}>
+        <p style={{ marginBottom: "10px", fontSize: "13px" }}>
           {language === "en" && "For any requests send your request to support"}
           {language === "ku" &&
             "بۆ هەر داواکاریەک پەیوەندی بە تیمی سەپۆرتی رێماس بکەن"}
