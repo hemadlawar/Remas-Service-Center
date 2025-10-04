@@ -285,7 +285,9 @@ export default function ServiceTable() {
         </p>
         <button
           style={supportButtonStyle}
-          onClick={() => (window.location.href = "https://netgrow.krd/")}
+          onClick={() =>
+            (window.location.href = "https://support.netgrow.krd/")
+          }
         >
           Go to Support
         </button>
