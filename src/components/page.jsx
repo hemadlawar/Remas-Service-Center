@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-
+import RemasLogo from "../assets/REMAS.png";
 export default function ServiceTable() {
   const [language, setLanguage] = useState("en");
   const [isMobile, setIsMobile] = useState(false);
@@ -112,11 +112,7 @@ export default function ServiceTable() {
     if (col.key === "phone")
       return (
         <a href={`tel:${service.phone}`} className="contact-link">
-          <img
-            src="https://cdn-icons-png.flaticon.com/512/724/724664.png"
-            alt="Call"
-            className="icon"
-          />
+          <img src={RemasLogo} alt="Call" className="icon" />
           {service.phone}
         </a>
       );
@@ -141,11 +137,7 @@ export default function ServiceTable() {
   return (
     <div className="page-container" dir={language === "en" ? "ltr" : "rtl"}>
       <div className="glass-card fade-in">
-        <img
-          src="https://i.ibb.co/39PSWqcT/376748679-775601211239377-3433871285863762361-n-1.jpg"
-          alt="Remas Logo"
-          className="logo bounce"
-        />
+        <img src={RemasLogo} alt="Remas Logo" className="logo bounce" />
         <h1 className="title">{translateTitle()}</h1>
 
         <div className="lang-buttons">
