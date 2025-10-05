@@ -1,11 +1,9 @@
 import React, { useState, useEffect } from "react";
-// Import the CSS file
 
 export default function ServiceTable() {
   const [language, setLanguage] = useState("en");
   const [isMobile, setIsMobile] = useState(false);
 
-  // Detect screen size for mobile
   useEffect(() => {
     const checkMobile = () => setIsMobile(window.innerWidth <= 768);
     checkMobile();
@@ -40,7 +38,6 @@ export default function ServiceTable() {
     },
   ];
 
-  // Convert Western digits to Arabic-Indic
   const toArabicDigits = (num) => {
     const arabicDigits = ["٠", "١", "٢", "٣", "٤", "٥", "٦", "٧", "٨", "٩"];
     return num.toString().replace(/[0-9]/g, (d) => arabicDigits[d]);
@@ -63,7 +60,6 @@ export default function ServiceTable() {
     return "Remas City Service Center";
   };
 
-  // Table columns for LTR and RTL
   const columnsLTR = [
     { key: "number", label: "#", align: "left" },
     { key: "name", label: translateName("Service") },
@@ -82,8 +78,6 @@ export default function ServiceTable() {
           : "واتس اب",
     },
   ];
-
-  // Correct RTL order → Service | Phone | WhatsApp | #
   const columnsRTL = [
     { key: "name", label: translateName("Service") },
     {
@@ -105,35 +99,25 @@ export default function ServiceTable() {
 
   const columns = language === "en" ? columnsLTR : columnsRTL;
 
-  // Helper to render cell content
   const renderCell = (service, col) => {
     if (col.key === "number") {
       const value =
         language === "en" ? service.number : toArabicDigits(service.number);
-      return (
-        <span style={{ textAlign: col.align || "center", display: "block" }}>
-          {value}
-        </span>
-      );
+      return <span className="number">{value}</span>;
     }
     if (col.key === "name")
       return (
-        <span className={isMobile ? "service-name-mobile" : ""}>
-          {translateName(service.name)}
-        </span>
+        <span className="service-name">{translateName(service.name)}</span>
       );
     if (col.key === "phone")
       return (
-        <a
-          href={`tel:${service.phone}`}
-          className={isMobile ? "link-mobile" : ""}
-        >
+        <a href={`tel:${service.phone}`} className="contact-link">
           <img
             src="https://cdn-icons-png.flaticon.com/512/724/724664.png"
             alt="Call"
             className="icon"
           />
-          <span>{service.phone}</span>
+          {service.phone}
         </a>
       );
     if (col.key === "whatsapp")
@@ -142,98 +126,87 @@ export default function ServiceTable() {
           href={`https://wa.me/${service.whatsapp.replace("+", "")}`}
           target="_blank"
           rel="noopener noreferrer"
-          className={isMobile ? "link-mobile" : ""}
+          className="contact-link whatsapp"
         >
           <img
             src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg"
             alt="WhatsApp"
             className="icon"
           />
-          <span>{service.whatsapp}</span>
+          {service.whatsapp}
         </a>
       );
-    return null;
   };
 
   return (
-    <div
-      className={`container${isMobile ? " mobile" : ""}`}
-      dir={language === "en" ? "ltr" : "rtl"}
-    >
-      <div className="table-container">
+    <div className="page-container" dir={language === "en" ? "ltr" : "rtl"}>
+      <div className="glass-card fade-in">
         <img
           src="https://i.ibb.co/39PSWqcT/376748679-775601211239377-3433871285863762361-n-1.jpg"
           alt="Remas Logo"
-          className="logo"
+          className="logo bounce"
         />
+        <h1 className="title">{translateTitle()}</h1>
 
-        <div className="title">{translateTitle()}</div>
-
-        <div className="button-container">
-          <button className="lang-btn" onClick={() => setLanguage("en")}>
+        <div className="lang-buttons">
+          <button
+            onClick={() => setLanguage("en")}
+            className={language === "en" ? "active" : ""}
+          >
             English
           </button>
-          <button className="lang-btn" onClick={() => setLanguage("ku")}>
+          <button
+            onClick={() => setLanguage("ku")}
+            className={language === "ku" ? "active" : ""}
+          >
             کورد
           </button>
-          <button className="lang-btn" onClick={() => setLanguage("ar")}>
+          <button
+            onClick={() => setLanguage("ar")}
+            className={language === "ar" ? "active" : ""}
+          >
             العربیة
           </button>
         </div>
 
-        <div style={{ overflowX: "auto" }}>
-          <table className="service-table">
-            <thead>
-              <tr>
-                {columns.map((col) => (
-                  <th
-                    key={col.key}
-                    style={{
-                      textAlign: col.align || "center",
-                    }}
-                  >
-                    {col.label}
-                  </th>
+        <table className="service-table">
+          <thead>
+            <tr>
+              {columns.map((c) => (
+                <th key={c.key}>{c.label}</th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {services.map((service, i) => (
+              <tr key={i}>
+                {columns.map((c) => (
+                  <td key={c.key}>{renderCell(service, c)}</td>
                 ))}
               </tr>
-            </thead>
-            <tbody>
-              {services.map((service, idx) => (
-                <tr key={idx}>
-                  {columns.map((col) => (
-                    <td
-                      key={col.key}
-                      style={{
-                        textAlign: col.align || "center",
-                      }}
-                    >
-                      {renderCell(service, col)}
-                    </td>
-                  ))}
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      </div>
+            ))}
+          </tbody>
+        </table>
 
-      <div className={`support-section${isMobile ? " support-mobile" : ""}`}>
-        <p>
-          {language === "en" && "For any requests send your request to support"}
-          {language === "ku" &&
-            "بۆ هەر داواکاریەک پەیوەندی بە تیمی سەپۆرتی رێماس بکەن"}
-          {language === "ar" && "لأي طلبات، أرسل طلبك إلى الدعم"}
-        </p>
-        <button
-          className="support-btn"
-          onClick={() =>
-            (window.location.href = "https://support.netgrow.krd/")
-          }
-        >
-          {language === "en" && "Go to Support"}
-          {language === "ku" && "تیمی سەپۆڕت"}
-          {language === "ar" && "اذهب إلى الدعم"}
-        </button>
+        <div className="support-section">
+          <p>
+            {language === "en" &&
+              "For any requests send your request to support"}
+            {language === "ku" &&
+              "بۆ هەر داواکاریەک پەیوەندی بە تیمی سەپۆرتی رێماس بکەن"}
+            {language === "ar" && "لأي طلبات، أرسل طلبك إلى الدعم"}
+          </p>
+          <button
+            className="support-btn"
+            onClick={() =>
+              (window.location.href = "https://support.netgrow.krd/")
+            }
+          >
+            {language === "en" && "Go to Support"}
+            {language === "ku" && "تیمی سەپۆڕت"}
+            {language === "ar" && "اذهب إلى الدعم"}
+          </button>
+        </div>
       </div>
     </div>
   );

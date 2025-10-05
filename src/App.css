@@ -1,134 +1,198 @@
-.container {
-  font-family: Arial, sans-serif;
-  background: #fff;
+/* Background with gradient animation */
+.page-container {
+  font-family: "Poppins", sans-serif;
+  background: linear-gradient(135deg, #e3f2fd, #bbdefb, #e1bee7);
+  background-size: 300% 300%;
+  animation: gradientShift 10s ease infinite;
   display: flex;
   justify-content: center;
   align-items: center;
   min-height: 100vh;
-  padding: 10px;
-  flex-direction: column;
-  width: 100%;
-  box-sizing: border-box;
-  overflow-x: hidden;
+  padding: 20px;
 }
-.table-container {
-  border-radius: 12px;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
-  overflow-x: auto;
+
+/* Glassy card */
+.glass-card {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(12px);
+  border-radius: 20px;
+  padding: 25px;
   width: 100%;
-  max-width: 700px;
-  text-align: center;
-  padding: 0 5px;
-  box-sizing: border-box;
+  max-width: 750px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  animation: fadeIn 1.2s ease-in-out;
 }
+
+/* Logo animation */
 .logo {
-  width: 100px;
-  max-width: 30%;
-  height: auto;
-  margin: 10px auto;
   display: block;
+  margin: 0 auto 15px;
+  width: 120px;
+  animation: bounce 2s infinite;
 }
+
 .title {
   text-align: center;
-  background-color: #1976d2;
-  color: #fff;
-  padding: 12px 0;
-  font-size: 18px;
-  font-weight: bold;
+  color: #1565c0;
+  font-weight: 700;
+  font-size: 1.5rem;
+  margin-bottom: 15px;
 }
-.button-container {
+
+/* Language buttons */
+.lang-buttons {
   display: flex;
   justify-content: center;
-  gap: 8px;
-  flex-wrap: wrap;
-  margin: 8px 0;
+  gap: 10px;
+  margin-bottom: 15px;
 }
-.lang-btn {
-  padding: 6px 10px;
+.lang-buttons button {
   border: none;
-  border-radius: 6px;
+  padding: 8px 15px;
+  border-radius: 10px;
+  background: #1976d2;
+  color: white;
+  font-weight: 600;
   cursor: pointer;
-  background-color: #1976d2;
-  color: #fff;
-  font-weight: bold;
-  font-size: 13px;
-  transition: background 0.3s;
-  flex: 1 1 30%;
-  min-width: 80px;
+  transition: all 0.3s ease;
 }
+.lang-buttons button:hover {
+  transform: scale(1.05);
+  background: #0d47a1;
+}
+.lang-buttons .active {
+  background: #0d47a1;
+}
+
+/* Table styles */
 .service-table {
   width: 100%;
   border-collapse: collapse;
-  font-size: 13px;
-  table-layout: auto;
+  border-radius: 12px;
+  overflow: hidden;
 }
 .service-table th {
-  background-color: #e3f2fd;
-  color: #333;
-  padding: 8px 5px;
-  text-align: center;
+  background: #1565c0;
+  color: white;
+  padding: 10px;
   font-size: 14px;
-  border-bottom: 2px solid #bbdefb;
-  white-space: nowrap;
 }
 .service-table td {
-  padding: 8px 5px;
+  background: white;
   text-align: center;
+  padding: 10px;
   border-bottom: 1px solid #e0e0e0;
-  font-size: 13px;
-  word-break: break-word;
+  transition: background 0.3s;
 }
+.service-table tr:hover td {
+  background: #f1f8e9;
+}
+
+/* Icons and links */
 .icon {
   width: 20px;
   height: 20px;
-  cursor: pointer;
-  transition: transform 0.2s ease;
+  margin-right: 5px;
+  vertical-align: middle;
 }
+.contact-link {
+  display: inline-flex;
+  align-items: center;
+  text-decoration: none;
+  color: #1976d2;
+  font-weight: 500;
+}
+.contact-link.whatsapp {
+  color: #25d366;
+}
+
+/* Support section */
 .support-section {
   margin-top: 20px;
   text-align: center;
-  padding: 0 10px;
+}
+.support-section p {
+  margin-bottom: 10px;
+  color: #333;
+  font-size: 14px;
 }
 .support-btn {
-  padding: 8px 16px;
-  background-color: #1976d2;
-  color: #fff;
+  padding: 10px 20px;
   border: none;
-  border-radius: 6px;
-  cursor: pointer;
+  border-radius: 10px;
+  background: linear-gradient(to right, #42a5f5, #7e57c2);
+  color: white;
   font-weight: bold;
-  font-size: 13px;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+.support-btn:hover {
+  transform: scale(1.05);
 }
 
-/* MOBILE STYLES */
+/* Animations */
+@keyframes gradientShift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(15px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@keyframes bounce {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-5px);
+  }
+}
 @media (max-width: 768px) {
-  .container {
-    min-height: unset;
-    padding: 5px;
+  .service-table {
+    width: 100%;
+    margin: 0 auto;
+    table-layout: auto; /* ✅ change from fixed to auto for dynamic column width */
   }
-  .table-container {
-    max-width: 100%;
-    box-shadow: none;
-    padding: 0;
-  }
-  .title {
-    font-size: 16px;
-    padding: 10px 0;
-  }
+
   .service-table th,
   .service-table td {
-    font-size: 12px;
-    padding: 6px 2px;
+    font-size: 10px;
+    padding: 8px 4px;
+    text-align: center;
+    word-wrap: break-word;
+    max-width: 100px; /* ✅ limit width to prevent long numbers from overflowing */
+    white-space: normal; /* ✅ allow wrapping */
   }
-  .service-name-mobile {
-    color: black !important;
-    font-weight: bold;
+
+  .contact-link {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 3px;
+    font-size: 10px; /* ✅ make text a bit smaller to fit better */
+    line-height: 1.2;
+    text-align: center;
+    word-break: break-word;
   }
-  .support-mobile p {
-    color: black !important;
-    font-weight: bold;
-  }
-  .link-mobile {
-    color: black !important;
+
+  .contact-link img {
+    width: 16px;
+    height: 16px;
+    margin: 0;
   }
 }
