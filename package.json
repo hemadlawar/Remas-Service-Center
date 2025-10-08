@@ -1,5 +1,6 @@
 {
   "name": "my-react-app",
+  "homepage": "https://service.artima-iq.com",
   "private": true,
   "version": "0.0.0",
   "type": "module",

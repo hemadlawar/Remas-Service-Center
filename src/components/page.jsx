@@ -112,7 +112,11 @@ export default function ServiceTable() {
     if (col.key === "phone")
       return (
         <a href={`tel:${service.phone}`} className="contact-link">
-          <img src={RemasLogo} alt="Call" className="icon" />
+          <img
+            src="https://cdn-icons-png.flaticon.com/512/724/724664.png"
+            alt="Call"
+            className="icon"
+          />
           {service.phone}
         </a>
       );
